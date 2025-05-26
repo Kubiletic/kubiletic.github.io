@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubiletic - Your Life Is Your Own</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom scrollbar for a more minimalist feel (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a; /* Dark gray track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555; /* Medium gray thumb */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777; /* Lighter gray on hover */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Black background */
+            color: #FFFFFF; /* White text */
+        }
+        .section-padding {
+            padding-top: 4rem; /* 64px */
+            padding-bottom: 4rem; /* 64px */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .section-padding {
+                padding-top: 6rem; /* 96px */
+                padding-bottom: 6rem; /* 96px */
+            }
+        }
+        .gray-fade {
+            filter: grayscale(60%) opacity(0.85);
+            transition: filter 0.3s ease-in-out;
+        }
+        .gray-fade:hover {
+            filter: grayscale(20%) opacity(1);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #4A5568; /* gray-700 */
+            color: #FFFFFF;
+        }
+        .btn-primary:hover {
+            background-color: #2D3748; /* gray-800 */
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: #FFFFFF;
+            border: 2px solid #4A5568; /* gray-700 */
+        }
+        .btn-secondary:hover {
+            background-color: #4A5568; /* gray-700 */
+            color: #FFFFFF;
+        }
+        /* Smooth transition for section visibility (optional, can be more complex) */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card {
+            background-color: #1A202C; /* gray-800, slightly lighter than pure black for kaders */
+            border: 1px solid #2D3748; /* gray-700 for border */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <header class="bg-black/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#hero" class="text-3xl font-bold text-white">
+                    Kubiletic
+                    </a>
+
+                <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#about" class="text-gray-300 hover:text-white transition duration-300 font-medium">About</a>
+                    <a href="#group-training" class="text-gray-300 hover:text-white transition duration-300 font-medium">Group Training</a>
+                    <a href="#personal-training" class="text-gray-300 hover:text-white transition duration-300 font-medium">Personal Training</a>
+                    <a href="#testimonials" class="text-gray-300 hover:text-white transition duration-300 font-medium">Testimonials</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition duration-300 font-medium">FAQ</a>
+                    <a href="#contact" class="btn btn-primary text-sm py-2 px-4">Contact</a>
+                </nav>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-black/90 backdrop-blur-md">
+            <a href="#about" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">About</a>
+            <a href="#group-training" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Group Training</a>
+            <a href="#personal-training" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Personal Training</a>
+            <a href="#testimonials" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Testimonials</a>
+            <a href="#faq" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">FAQ</a>
+            <a href="#contact" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-black section-padding relative overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight animate-fade-in-down">
+                    Your Life Is <span class="text-gray-400">Your Own.</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto animate-fade-in-up">
+                    Rediscover movement, build strength, and feel truly at home in your body with Kubiletic.
+                </p>
+                <a href="#group-training" class="btn btn-primary text-lg animate-fade-in-up animation-delay-300">
+                    Start My Journey
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="section-padding bg-gray-900">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Meet Your "Very Personal" Trainer</h2>
+                    <p class="text-gray-400 text-lg max-w-3xl mx-auto">My philosophy, my journey, and what you can expect.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="animate-slide-in-left">
+                        <img src="https://placehold.co/600x700/333333/CCCCCC?text=Your+Professional+Photo" alt="[Jouw professionele foto]" class="rounded-lg shadow-2xl gray-fade w-full h-auto object-cover max-h-[700px]">
+                    </div>
+                    <div class="space-y-6 text-gray-300 animate-slide-in-right">
+                        <p class="text-lg leading-relaxed">
+                            I'm <span class="font-semibold text-white">[Jouw Naam]</span>, a self-taught athlete and certified ALO movement specialist. My journey into fitness led me to calisthenics, and from there, I delved deep into a multitude of disciplines – Pilates, gymnastics, circus arts, tricking, breakdance, yoga, and stretching. This diverse background shapes the unique "Movement" philosophy at Kubiletic.
+                        </p>
+                        <p class="leading-relaxed">
+                            At Kubiletic, we focus on mastering your own bodyweight. It's about relearning natural movement patterns, getting comfortable with the floor, and building functional strength that translates to everyday life. We address those often-neglected smaller muscles to help you move without pain and feel more connected to your body and surroundings.
+                        </p>
+                        <p class="leading-relaxed">
+                            I've personally experienced the transformative power of embracing movement. It reshaped not just my body, but my entire outlook on life, allowing me to attract positivity and truly shine. My mission is to share this gift, helping you discover your own strength, confidence, and joy through movement.
+                        </p>
+                        <p class="leading-relaxed">
+                            Expect a welcoming and supportive atmosphere in all our sessions. We train outdoors, energized by great music and a positive group dynamic. Lessons are flexible, tailored to the group's needs, and I'm always here to answer questions and adapt exercises for any injuries or concerns. This is your space to grow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section-padding bg-black">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">How I Can Help You Achieve Your Goals</h2>
+                    <p class="text-gray-400 text-lg">Explore our training options tailored for you.</p>
+                </div>
+
+                <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                    <div id="group-training" class="card transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/1A202C/4A5568?text=Outdoor+Group+Training" alt="[Groepstraining buiten]" class="rounded-md mb-6 gray-fade w-full h-64 object-cover">
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Bodyweight Group Training</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">
+                            Join our dynamic outdoor group sessions in the park! Each class includes a thorough warm-up, a challenging 20-25 minute HIIT segment, followed by skill-focused 'Movement' training. We explore accessible elements from calisthenics, breakdance, and gymnastics. We finish with a comprehensive cool-down and stretch.
+                        </p>
+                        <p class="text-gray-400 mb-2"><span class="font-semibold text-gray-200">Location:</span> [Naam Park/Locatie] - <a href="https://g.co/kgs/KTFiZF1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">View on Map</a></p>
+                        <p class="text-gray-400 mb-4"><span class="font-semibold text-gray-200">Community:</span> <a href="[JOUW WHATSAPP GROEP LINK HIER]" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">Join our WhatsApp Group!</a></p>
+                        
+                        <div class="mb-6 space-y-2">
+                            <p class="text-gray-200"><span class="font-semibold">Drop-in Class:</span> €15</p>
+                            <p class="text-gray-200"><span class="font-semibold">5-Session Pass:</span> €65</p>
+                            <p class="text-gray-200"><span class="font-semibold">10-Session Pass:</span> €120</p>
+                        </div>
+                        <a href="#contact" class="btn btn-secondary w-full sm:w-auto">Sign Up for a Class</a>
+                    </div>
+
+                    <div id="personal-training" class="card transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/1A202C/4A5568?text=Personal+Training+Session" alt="[Personal training sessie]" class="rounded-md mb-6 gray-fade w-full h-64 object-cover">
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Personal Training - Your "Very Personal" Journey</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed">
+                            Ready for a truly individualized approach? My Personal Training sessions are 100% tailored to your specific goals, needs, and current fitness level. We start with a comprehensive intake and movement assessment.
+                        </p>
+                        <p class="text-gray-500 text-sm mb-4">
+                            Guidance is for recreational and fitness purposes and does not constitute medical advice.
+                        </p>
+                        <a href="#contact" class="btn btn-primary w-full sm:w-auto">Book Your Free Intake Call</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="section-padding bg-gray-900">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">What My Clients Say</h2>
+                    <p class="text-gray-400 text-lg">Real people, real results, real energy.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card text-center">
+                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+1" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                        <p class="text-gray-300 italic mb-3">"I found new energy I didn't know I had! The training is challenging but so rewarding."</p>
+                        <p class="font-semibold text-white">- Client Name 1</p>
+                    </div>
+                    <div class="card text-center">
+                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+2" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                        <p class="text-gray-300 italic mb-3">"The perfect workout to look forward to each week. I'm learning so many new skills and feel much stronger."</p>
+                        <p class="font-semibold text-white">- Client Name 2</p>
+                    </div>
+                    <div class="card text-center md:col-span-2 lg:col-span-1">
+                         <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+3" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                        <p class="text-gray-300 italic mb-3">"Kubiletic helped me get active and actually enjoy it. The outdoor setting is a huge bonus and the group is amazing!"</p>
+                        <p class="font-semibold text-white">- Client Name 3</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section-padding bg-black">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Got Questions? I've Got Answers.</h2>
+                </div>
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <details class="card p-0 overflow-hidden group">
+                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
+                            <h4 class="font-semibold text-lg text-white">What if it rains?</h4>
+                            <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="p-4 sm:p-6 border-t border-gray-700">
+                            <p class="text-gray-400 leading-relaxed">I'm always ready to train! I'll send a poll in our WhatsApp group. If 3 or more people are keen to train, the session is on. Otherwise, we'll cancel for that day.</p>
+                        </div>
+                    </details>
+                    <details class="card p-0 overflow-hidden group">
+                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
+                            <h4 class="font-semibold text-lg text-white">What should I bring to a group class?</h4>
+                             <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="p-4 sm:p-6 border-t border-gray-700">
+                            <p class="text-gray-400 leading-relaxed">A towel, comfortable clothing you can move freely in (suitable for lying on grass/artificial grass), and optionally, grip gloves if you find them helpful. Don't forget a water bottle!</p>
+                        </div>
+                    </details>
+                    <details class="card p-0 overflow-hidden group">
+                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
+                            <h4 class="font-semibold text-lg text-white">Is the training suitable for absolute beginners?</h4>
+                             <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="p-4 sm:p-6 border-t border-gray-700">
+                            <p class="text-gray-400 leading-relaxed">Absolutely! I always adapt the training when new members join, ensuring exercises are tailored to different levels. Everyone starts somewhere, and you'll be supported every step of the way.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-padding bg-gray-900">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Move? Let's Connect!</h2>
+                    <p class="text-gray-400 text-lg max-w-xl mx-auto">Have questions, want to book your first group class, or interested in a free personal training intake? Reach out – I'd love to hear from you.</p>
+                </div>
+                <div class="max-w-lg mx-auto text-center space-y-6">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2 text-white">Call Me</h4>
+                        <a href="tel:+31[JOUWTELEFOONNUMMER]" class="text-gray-300 hover:text-white text-lg transition duration-300">+31 [Jouw Telefoonnummer Hier]</a>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2 text-white">Follow on Instagram</h4>
+                        <a href="https://www.instagram.com/kubiletic" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white text-lg transition duration-300">@kubiletic</a>
+                    </div>
+                    <!-- 
+                    <form action="#" method="POST" class="space-y-4">
+                        <div>
+                            <label for="name" class="sr-only">Name</label>
+                            <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white">
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white">
+                        </div>
+                        <div>
+                            <label for="message" class="sr-only">Message</label>
+                            <textarea name="message" id="message" rows="4" placeholder="Your Message" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                    </form>
+                    -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t border-gray-800 py-8 text-center">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-gray-500 mb-2">&copy; <span id="currentYear"></span> Kubiletic. All Rights Reserved.</p>
+            <p class="text-gray-600 text-sm">
+                <a href="#terms" id="terms-link" class="hover:text-gray-400 underline">Terms of Service & Disclaimer</a>
+            </p>
+            <div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[100] hidden">
+                <div class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-white">Terms of Service & Disclaimer</h3>
+                        <button id="close-terms-modal" class="text-gray-400 hover:text-white">&times;</button>
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-3">
+                        <p>All training sessions and advice provided by Kubiletic are for recreational and general fitness purposes only.</p>
+                        <p>The information and training provided are not intended as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have learned or experienced through Kubiletic.</p>
+                        <p>Participation in any fitness program involves a risk of injury. By participating in Kubiletic training sessions, you acknowledge and accept these risks and agree to waive any claim against Kubiletic or its trainers for any injuries or damages sustained.</p>
+                        <p>Please inform your trainer of any pre-existing medical conditions, injuries, or physical limitations before starting any exercise program.</p>
+                        <p>Results from training programs may vary and are not guaranteed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // Close mobile menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Smooth scroll for all anchor links (redundant if html.scroll-smooth is fully supported)
+        // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        //     anchor.addEventListener('click', function (e) {
+        //         const href = this.getAttribute('href');
+        //         // Ensure it's an internal link and not just "#"
+        //         if (href.length > 1 && document.querySelector(href)) {
+        //             e.preventDefault();
+        //             document.querySelector(href).scrollIntoView({
+        //                 behavior: 'smooth'
+        //             });
+        //         }
+        //     });
+        // });
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Section visibility on scroll (simple version)
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null, // relative to document viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of section visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: stop observing once visible to save resources
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Animation classes for hero section (Tailwind doesn't have these by default)
+        // You might need to define these or use a library if you want complex animations
+        // For simplicity, I'll add basic fade-in/up with CSS custom properties if needed
+        // Or, use Tailwind's animation utilities if available/configured
+        const heroElements = document.querySelectorAll('#hero .animate-fade-in-down, #hero .animate-fade-in-up');
+        heroElements.forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.2}s`; // Stagger animation
+            el.style.animationFillMode = 'backwards'; // Start hidden
+        });
+        
+        // Add some keyframes for the hero animations if not using a library
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = `
+            @keyframes fadeInDown {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-down { animation: fadeInDown 0.8s ease-out; }
+
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
+            .animation-delay-300 { animation-delay: 0.3s; }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // Terms Modal Logic
+        const termsLink = document.getElementById('terms-link');
+        const termsModal = document.getElementById('terms-modal');
+        const closeTermsModalButton = document.getElementById('close-terms-modal');
+
+        if (termsLink && termsModal && closeTermsModalButton) {
+            termsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                termsModal.classList.remove('hidden');
+            });
+            closeTermsModalButton.addEventListener('click', () => {
+                termsModal.classList.add('hidden');
+            });
+            // Close modal if clicked outside of the content
+            termsModal.addEventListener('click', (e) => {
+                if (e.target === termsModal) {
+                    termsModal.classList.add('hidden');
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
