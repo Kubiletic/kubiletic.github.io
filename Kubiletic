@@ -149,11 +149,11 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <div class="animate-slide-in-left">
-                        <img src="https://placehold.co/600x700/333333/CCCCCC?text=Your+Professional+Photo" alt="[Jouw professionele foto]" class="rounded-lg shadow-2xl gray-fade w-full h-auto object-cover max-h-[700px]">
+                        <img src="D:\fotos\sony\06052024\DSC02362.JPG" alt="[Jouw professionele foto]" class="rounded-lg shadow-2xl gray-fade w-full h-auto object-cover max-h-[700px]">
                     </div>
                     <div class="space-y-6 text-gray-300 animate-slide-in-right">
                         <p class="text-lg leading-relaxed">
-                            I'm <span class="font-semibold text-white">[Jouw Naam]</span>, a self-taught athlete and certified ALO movement specialist. My journey into fitness led me to calisthenics, and from there, I delved deep into a multitude of disciplines – Pilates, gymnastics, circus arts, tricking, breakdance, yoga, and stretching. This diverse background shapes the unique "Movement" philosophy at Kubiletic.
+                            I'm <span class="font-semibold text-white">[Kubi]</span>, a self-taught athlete and certified ALO movement specialist. My journey into fitness led me to calisthenics, and from there, I delved deep into a multitude of disciplines – Pilates, gymnastics, circus arts, tricking, breakdance, yoga, and stretching. This diverse background shapes the unique "Movement" philosophy at Kubiletic.
                         </p>
                         <p class="leading-relaxed">
                             At Kubiletic, we focus on mastering your own bodyweight. It's about relearning natural movement patterns, getting comfortable with the floor, and building functional strength that translates to everyday life. We address those often-neglected smaller muscles to help you move without pain and feel more connected to your body and surroundings.
@@ -183,8 +183,8 @@
                         <p class="text-gray-400 mb-4 leading-relaxed">
                             Join our dynamic outdoor group sessions in the park! Each class includes a thorough warm-up, a challenging 20-25 minute HIIT segment, followed by skill-focused 'Movement' training. We explore accessible elements from calisthenics, breakdance, and gymnastics. We finish with a comprehensive cool-down and stretch.
                         </p>
-                        <p class="text-gray-400 mb-2"><span class="font-semibold text-gray-200">Location:</span> [Naam Park/Locatie] - <a href="https://g.co/kgs/KTFiZF1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">View on Map</a></p>
-                        <p class="text-gray-400 mb-4"><span class="font-semibold text-gray-200">Community:</span> <a href="[JOUW WHATSAPP GROEP LINK HIER]" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">Join our WhatsApp Group!</a></p>
+                        <p class="text-gray-400 mb-2"><span class="font-semibold text-gray-200">Location:</span> [Calisthenics park Reeshof] - <a href="https://g.co/kgs/KTFiZF1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">View on Map</a></p>
+                        <p class="text-gray-400 mb-4"><span class="font-semibold text-gray-200">Community:</span> <a href="[Whatsapp group link]" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">Join our WhatsApp Group!</a></p>
                         
                         <div class="mb-6 space-y-2">
                             <p class="text-gray-200"><span class="font-semibold">Drop-in Class:</span> €15</p>
@@ -217,19 +217,19 @@
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="card text-center">
-                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+1" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=V" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
                         <p class="text-gray-300 italic mb-3">"I found new energy I didn't know I had! The training is challenging but so rewarding."</p>
-                        <p class="font-semibold text-white">- Client Name 1</p>
+                        <p class="font-semibold text-white">- V</p>
                     </div>
                     <div class="card text-center">
-                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+2" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=R" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
                         <p class="text-gray-300 italic mb-3">"The perfect workout to look forward to each week. I'm learning so many new skills and feel much stronger."</p>
-                        <p class="font-semibold text-white">- Client Name 2</p>
+                        <p class="font-semibold text-white">- R</p>
                     </div>
                     <div class="card text-center md:col-span-2 lg:col-span-1">
-                         <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Client+3" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
+                         <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=C" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
                         <p class="text-gray-300 italic mb-3">"Kubiletic helped me get active and actually enjoy it. The outdoor setting is a huge bonus and the group is amazing!"</p>
-                        <p class="font-semibold text-white">- Client Name 3</p>
+                        <p class="font-semibold text-white">- C</p>
                     </div>
                 </div>
             </div>
