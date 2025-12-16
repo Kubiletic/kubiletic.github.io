@@ -8,442 +8,471 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Custom scrollbar for a more minimalist feel (optional) */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a; /* Dark gray track */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #555; /* Medium gray thumb */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #777; /* Lighter gray on hover */
+        /* Base Setup */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #121212;
+            --accent: #e2e8f0;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000; /* Black background */
-            color: #FFFFFF; /* White text */
-        }
-        .section-padding {
-            padding-top: 4rem; /* 64px */
-            padding-bottom: 4rem; /* 64px */
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .section-padding {
-                padding-top: 6rem; /* 96px */
-                padding-bottom: 6rem; /* 96px */
-            }
-        }
-        .gray-fade {
-            filter: grayscale(60%) opacity(0.85);
-            transition: filter 0.3s ease-in-out;
-        }
-        .gray-fade:hover {
-            filter: grayscale(20%) opacity(1);
-        }
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem; /* py-3 px-6 */
-            border-radius: 0.375rem; /* rounded-md */
-            font-weight: 600; /* font-semibold */
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-align: center;
-        }
-        .btn-primary {
-            background-color: #4A5568; /* gray-700 */
+            background-color: var(--bg-color);
             color: #FFFFFF;
+            overflow-x: hidden;
         }
-        .btn-primary:hover {
-            background-color: #2D3748; /* gray-800 */
+
+        /* Smooth page transitions */
+        .page-section {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        /* Utilities */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .bento-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .bento-card:hover {
+            border-color: rgba(255,255,255,0.2);
             transform: translateY(-2px);
         }
-        .btn-secondary {
-            background-color: transparent;
-            color: #FFFFFF;
-            border: 2px solid #4A5568; /* gray-700 */
+
+        .btn {
+            @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-200;
         }
-        .btn-secondary:hover {
-            background-color: #4A5568; /* gray-700 */
-            color: #FFFFFF;
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
         }
-        /* Smooth transition for section visibility (optional, can be more complex) */
-        section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        .btn-primary:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-1px);
         }
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
         }
-        .card {
-            background-color: #1A202C; /* gray-800, slightly lighter than pure black for kaders */
-            border: 1px solid #2D3748; /* gray-700 for border */
-            border-radius: 0.5rem; /* rounded-lg */
-            padding: 1.5rem; /* p-6 */
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white antialiased">
 
-    <header class="bg-black/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="#hero" class="text-3xl font-bold text-white">
-                    Kubiletic
-                    </a>
+                <!-- Logo -->
+                <a href="#home" onclick="router('home')" class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                    <i data-lucide="activity" class="h-6 w-6"></i> Kubiletic
+                </a>
 
-                <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                    <a href="#about" class="text-gray-300 hover:text-white transition duration-300 font-medium">About</a>
-                    <a href="#group-training" class="text-gray-300 hover:text-white transition duration-300 font-medium">Group Training</a>
-                    <a href="#personal-training" class="text-gray-300 hover:text-white transition duration-300 font-medium">Personal Training</a>
-                    <a href="#testimonials" class="text-gray-300 hover:text-white transition duration-300 font-medium">Testimonials</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white transition duration-300 font-medium">FAQ</a>
-                    <a href="#contact" class="btn btn-primary text-sm py-2 px-4">Contact</a>
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <button onclick="router('group')" class="text-gray-400 hover:text-white transition text-sm font-medium">Group</button>
+                    <button onclick="router('personal')" class="text-gray-400 hover:text-white transition text-sm font-medium">Personal</button>
+                    <button onclick="router('online')" class="text-gray-400 hover:text-white transition text-sm font-medium">Online</button>
+                    <button onclick="router('about')" class="text-gray-400 hover:text-white transition text-sm font-medium">About</button>
+                    <a href="#contact" class="bg-white text-black px-4 py-2 rounded-md text-sm font-bold hover:bg-gray-200 transition">Contact</a>
                 </nav>
 
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
-                    </button>
-                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white p-2">
+                    <i data-lucide="menu" class="h-6 w-6"></i>
+                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-black/90 backdrop-blur-md">
-            <a href="#about" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">About</a>
-            <a href="#group-training" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Group Training</a>
-            <a href="#personal-training" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Personal Training</a>
-            <a href="#testimonials" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Testimonials</a>
-            <a href="#faq" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">FAQ</a>
-            <a href="#contact" class="block py-3 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300">Contact</a>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-black border-b border-gray-800">
+            <div class="flex flex-col p-4 space-y-4">
+                <button onclick="router('home')" class="text-left text-gray-300 hover:text-white py-2">Home</button>
+                <button onclick="router('group')" class="text-left text-gray-300 hover:text-white py-2">Group Training</button>
+                <button onclick="router('personal')" class="text-left text-gray-300 hover:text-white py-2">Personal Training</button>
+                <button onclick="router('online')" class="text-left text-gray-300 hover:text-white py-2">Online Coaching</button>
+                <button onclick="router('about')" class="text-left text-gray-300 hover:text-white py-2">About Me</button>
+                <a href="#contact" onclick="closeMobileMenu()" class="text-left text-white font-bold py-2">Contact</a>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="min-h-screen flex items-center justify-center bg-black section-padding relative overflow-hidden">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight animate-fade-in-down">
-                    Your Life Is <span class="text-gray-400">Your Own.</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto animate-fade-in-up">
-                    Rediscover movement, build strength, and feel truly at home in your body with Kubiletic.
-                </p>
-                <a href="#group-training" class="btn btn-primary text-lg animate-fade-in-up animation-delay-300">
-                    Start My Journey
-                </a>
+    <main class="pt-20">
+        
+        <!-- VIEW: HOME -->
+        <section id="view-home" class="page-section active min-h-[calc(100vh-80px)]">
+            <!-- Hero -->
+            <div class="relative py-20 lg:py-32 px-4 overflow-hidden">
+                <div class="container mx-auto text-center max-w-4xl relative z-10">
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                        Your Life Is <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">Your Own.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                        Rediscover movement. Build functional strength. Feel at home in your body.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="router('group')" class="btn btn-primary">Group Classes</button>
+                        <button onclick="router('personal')" class="btn btn-outline">1-on-1 Training</button>
+                    </div>
+                </div>
+                
+                <!-- Background Gradient Decoration -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white opacity-[0.03] blur-[100px] rounded-full -z-10"></div>
+            </div>
+
+            <!-- Bento Grid Services -->
+            <div class="container mx-auto px-4 pb-20">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div onclick="router('group')" class="bento-card p-8 rounded-2xl cursor-pointer group">
+                        <div class="h-12 w-12 bg-gray-800 rounded-full flex items-center justify-center mb-6 text-white group-hover:scale-110 transition">
+                            <i data-lucide="users" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Group Training</h3>
+                        <p class="text-gray-400 text-sm mb-4">Outdoor sessions focusing on HIIT, skills, and community energy.</p>
+                        <span class="text-white text-sm font-semibold underline decoration-gray-600 underline-offset-4">Join the crew &rarr;</span>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="router('personal')" class="bento-card p-8 rounded-2xl cursor-pointer group">
+                        <div class="h-12 w-12 bg-gray-800 rounded-full flex items-center justify-center mb-6 text-white group-hover:scale-110 transition">
+                            <i data-lucide="user" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Personal Training</h3>
+                        <p class="text-gray-400 text-sm mb-4">100% tailored to your physiology, goals, and mindset.</p>
+                        <span class="text-white text-sm font-semibold underline decoration-gray-600 underline-offset-4">Start your journey &rarr;</span>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="router('online')" class="bento-card p-8 rounded-2xl cursor-pointer group">
+                        <div class="h-12 w-12 bg-gray-800 rounded-full flex items-center justify-center mb-6 text-white group-hover:scale-110 transition">
+                            <i data-lucide="smartphone" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Online Coaching</h3>
+                        <p class="text-gray-400 text-sm mb-4">Train on your terms with digital programming and form checks.</p>
+                        <span class="text-white text-sm font-semibold underline decoration-gray-600 underline-offset-4">Get coached anywhere &rarr;</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Testimonial -->
+            <div class="bg-[#0A0A0A] py-16 border-y border-white/5">
+                <div class="container mx-auto px-4 text-center">
+                    <p class="text-xl md:text-2xl font-light italic text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                        "Kubiletic helped me get active and actually enjoy it. The outdoor setting is a huge bonus and the group is amazing!"
+                    </p>
+                    <p class="mt-6 font-bold text-white">— Client C.</p>
+                </div>
             </div>
         </section>
 
-        <section id="about" class="section-padding bg-gray-900">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 md:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Meet Your "Very Personal" Trainer</h2>
-                    <p class="text-gray-400 text-lg max-w-3xl mx-auto">My philosophy, my journey, and what you can expect.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                    <div class="animate-slide-in-left">
-                        <img src="images/DSC02458.JPG" alt="[picture]" class="rounded-lg shadow-2xl gray-fade w-full h-auto object-cover max-h-[700px]">
+
+        <!-- VIEW: GROUP TRAINING -->
+        <section id="view-group" class="page-section min-h-[calc(100vh-80px)]">
+            <div class="container mx-auto px-4 py-12 max-w-5xl">
+                <button onclick="router('home')" class="text-gray-500 hover:text-white mb-8 flex items-center gap-2 text-sm">
+                    <i data-lucide="arrow-left" class="h-4 w-4"></i> Back Home
+                </button>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-6">Group Training</h2>
+                        <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                            Dynamic outdoor sessions in the park. We combine HIIT with skill-focused 'Movement' training (calisthenics, breakdance, gymnastics basics).
+                        </p>
+                        <ul class="space-y-4 text-gray-300 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-gray-500 mt-1"></i>
+                                <span>20-25 min HIIT & Strength</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-gray-500 mt-1"></i>
+                                <span>Skill acquisition & Flow</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-gray-500 mt-1"></i>
+                                <span>Accessible for all levels</span>
+                            </li>
+                        </ul>
+                        <div class="flex gap-4">
+                            <a href="https://chat.whatsapp.com/LWUjqXGqeuaIqzZuaKGm6g" target="_blank" class="btn btn-primary w-full md:w-auto">
+                                <i data-lucide="message-circle" class="h-4 w-4 mr-2"></i> Join WhatsApp Group
+                            </a>
+                        </div>
                     </div>
-                    <div class="space-y-6 text-gray-300 animate-slide-in-right">
-                        <p class="text-lg leading-relaxed">
-                            I'm <span class="font-semibold text-white">[Kubi]</span>, a self-taught athlete and currently a student at ALO. My journey into fitness led me to calisthenics, and from there, I delved deep into a multitude of disciplines – Pilates, gymnastics, circus arts, tricking, breakdance, yoga, and stretching. This diverse background shapes the unique "Movement" philosophy at Kubiletic.
-                        </p>
-                        <p class="leading-relaxed">
-                            At Kubiletic, we focus on mastering your own bodyweight. It's about relearning natural movement patterns, getting comfortable with the floor, and building functional strength that translates to everyday life. We address those often-neglected smaller muscles to help you move without pain and feel more connected to your body and surroundings.
-                        </p>
-                        <p class="leading-relaxed">
-                            I've personally experienced the transformative power of embracing movement. It reshaped not just my body, but my entire outlook on life, allowing me to attract positivity and truly shine. My mission is to share this gift, helping you discover your own strength, confidence, and joy through movement.
-                        </p>
-                        <p class="leading-relaxed">
-                            Expect a welcoming and supportive atmosphere in all our sessions. We train outdoors, energized by great music and a positive group dynamic. Lessons are flexible, tailored to the group's needs, and I'm always here to answer questions and adapt exercises for any injuries or concerns. This is your space to grow.
-                        </p>
+                    <div class="bg-gray-800 rounded-xl overflow-hidden aspect-video relative">
+                        <!-- Placeholder for Group Image -->
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=2070" class="object-cover w-full h-full opacity-60" alt="Group Training">
+                    </div>
+                </div>
+
+                <!-- Logistics Grid -->
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <div class="bento-card p-6 rounded-xl">
+                        <i data-lucide="map-pin" class="h-6 w-6 text-white mb-4"></i>
+                        <h4 class="font-bold mb-2">Location</h4>
+                        <p class="text-gray-400 text-sm">Calisthenics park Reeshof</p>
+                        <a href="https://g.co/kgs/KTFiZF1" target="_blank" class="text-xs text-white underline mt-2 inline-block">View Map</a>
+                    </div>
+                    <div class="bento-card p-6 rounded-xl">
+                        <i data-lucide="credit-card" class="h-6 w-6 text-white mb-4"></i>
+                        <h4 class="font-bold mb-2">Pricing</h4>
+                        <div class="space-y-2 text-sm text-gray-400">
+                            <div class="flex justify-between"><span>Drop-in</span> <span class="text-white">€15</span></div>
+                            <div class="flex justify-between"><span>5-Pass</span> <span class="text-white">€65</span></div>
+                            <div class="flex justify-between"><span>10-Pass</span> <span class="text-white">€120</span></div>
+                        </div>
+                    </div>
+                    <div class="bento-card p-6 rounded-xl">
+                        <i data-lucide="cloud-rain" class="h-6 w-6 text-white mb-4"></i>
+                        <h4 class="font-bold mb-2">Weather Policy</h4>
+                        <p class="text-gray-400 text-sm">We poll in WhatsApp. If 3+ people are keen, we train. Otherwise, we reschedule.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="section-padding bg-black">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 md:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">How I Can Help You Achieve Your Goals</h2>
-                    <p class="text-gray-400 text-lg">Explore our training options tailored for you.</p>
+        <!-- VIEW: PERSONAL TRAINING -->
+        <section id="view-personal" class="page-section min-h-[calc(100vh-80px)]">
+            <div class="container mx-auto px-4 py-12 max-w-5xl">
+                <button onclick="router('home')" class="text-gray-500 hover:text-white mb-8 flex items-center gap-2 text-sm">
+                    <i data-lucide="arrow-left" class="h-4 w-4"></i> Back Home
+                </button>
+
+                <div class="text-center mb-12">
+                    <span class="text-gray-500 uppercase tracking-widest text-xs font-bold">1-on-1 Coaching</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mt-2">The "Very Personal" Approach</h2>
                 </div>
 
-                <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-                    <div id="group-training" class="card transform hover:scale-105 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/1A202C/4A5568?text=Outdoor+Group+Training" alt="[Groepstraining buiten]" class="rounded-md mb-6 gray-fade w-full h-64 object-cover">
-                        <h3 class="text-2xl font-semibold mb-3 text-white">Bodyweight Group Training</h3>
-                        <p class="text-gray-400 mb-4 leading-relaxed">
-                            Join our dynamic outdoor group sessions in the park! Each class includes a thorough warm-up, a challenging 20-25 minute HIIT segment, followed by skill-focused 'Movement' training. We explore accessible elements from calisthenics, breakdance, and gymnastics. We finish with a comprehensive cool-down and stretch.
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
+                    <div class="space-y-6">
+                        <div class="bento-card p-6 rounded-xl border-l-4 border-white">
+                            <h3 class="text-xl font-bold text-white mb-2">Comprehensive Intake</h3>
+                            <p class="text-gray-400 text-sm">We don't guess. We assess movement patterns, injury history, and lifestyle factors.</p>
+                        </div>
+                        <div class="bento-card p-6 rounded-xl border-l-4 border-gray-600">
+                            <h3 class="text-xl font-bold text-white mb-2">Skill & Strength</h3>
+                            <p class="text-gray-400 text-sm">Master your bodyweight. Learn to handstand, squat deeper, or simply move without pain.</p>
+                        </div>
+                        <div class="bento-card p-6 rounded-xl border-l-4 border-gray-600">
+                            <h3 class="text-xl font-bold text-white mb-2">Mental Connection</h3>
+                            <p class="text-gray-400 text-sm">Building confidence through movement. Your body is capable of more than you think.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-start">
+                        <p class="text-xl text-gray-300 italic mb-8">
+                            "We experienced truly personalized training with an engaged, positive trainer who made every session goal-oriented and enjoyable."
                         </p>
-                        <p class="text-gray-400 mb-2"><span class="font-semibold text-gray-200">Location:</span> [Calisthenics park Reeshof] - <a href="https://g.co/kgs/KTFiZF1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">View on Map</a></p>
-                        <p class="text-gray-400 mb-4"><span class="font-semibold text-gray-200">Community:</span> <a href="https://chat.whatsapp.com/LWUjqXGqeuaIqzZuaKGm6g]" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white underline">Join our WhatsApp Group!</a></p>
+                        <p class="text-white font-bold mb-8">— Eda & Jako</p>
+                        <a href="#contact" class="btn btn-primary w-full">Book Free Intake Call</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: ONLINE COACHING (New) -->
+        <section id="view-online" class="page-section min-h-[calc(100vh-80px)]">
+            <div class="container mx-auto px-4 py-12 max-w-5xl">
+                <button onclick="router('home')" class="text-gray-500 hover:text-white mb-8 flex items-center gap-2 text-sm">
+                    <i data-lucide="arrow-left" class="h-4 w-4"></i> Back Home
+                </button>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-6">Train Anywhere, Anytime.</h2>
+                        <p class="text-gray-400 text-lg mb-8">
+                            Get the structure of Personal Training with the freedom of your own schedule. Perfect for those who travel or prefer training solo.
+                        </p>
                         
-                        <div class="mb-6 space-y-2">
-                            <p class="text-gray-200"><span class="font-semibold">Drop-in Class:</span> €15</p>
-                            <p class="text-gray-200"><span class="font-semibold">5-Session Pass:</span> €65</p>
-                            <p class="text-gray-200"><span class="font-semibold">10-Session Pass:</span> €120</p>
+                        <div class="space-y-6 mb-8">
+                            <div class="flex gap-4">
+                                <div class="bg-gray-800 p-3 rounded-lg h-fit"><i data-lucide="smartphone" class="h-6 w-6"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Custom Programming</h4>
+                                    <p class="text-sm text-gray-400">Workouts designed specifically for your equipment and goals.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-gray-800 p-3 rounded-lg h-fit"><i data-lucide="video" class="h-6 w-6"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Video Form Checks</h4>
+                                    <p class="text-sm text-gray-400">Upload videos of your lifts/skills and get detailed feedback.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-gray-800 p-3 rounded-lg h-fit"><i data-lucide="message-square" class="h-6 w-6"></i></div>
+                                <div>
+                                    <h4 class="font-bold">Direct Support</h4>
+                                    <p class="text-sm text-gray-400">Direct access to me for questions, adjustments, and motivation.</p>
+                                </div>
+                            </div>
                         </div>
-                        <a href="#contact" class="btn btn-secondary w-full sm:w-auto">Sign Up for a Class</a>
+                        <a href="#contact" class="btn btn-primary">Apply for Online Coaching</a>
                     </div>
-
-                    <div id="personal-training" class="card transform hover:scale-105 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/1A202C/4A5568?text=Personal+Training+Session" alt="[Personal training sessie]" class="rounded-md mb-6 gray-fade w-full h-64 object-cover">
-                        <h3 class="text-2xl font-semibold mb-3 text-white">Personal Training - Your "Very Personal" Journey</h3>
-                        <p class="text-gray-400 mb-4 leading-relaxed">
-                            Ready for a truly individualized approach? My Personal Training sessions are 100% tailored to your specific goals, needs, and current fitness level. We start with a comprehensive intake and movement assessment.
-                        </p>
-                        <p class="text-gray-500 text-sm mb-4">
-                            Guidance is for recreational and fitness purposes and does not constitute medical advice.
-                        </p>
-                        <a href="#contact" class="btn btn-primary w-full sm:w-auto">Book Your Free Intake Call</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="section-padding bg-gray-900">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 md:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">What My Clients Say</h2>
-                    <p class="text-gray-400 text-lg">Real people, real results, real energy.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card text-center">
-                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=Eda & Jako" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
-                        <p class="text-gray-300 italic mb-3">"We experienced truly personalized training with an engaged, positive trainer who made every session goal-oriented and enjoyable. Their flexibility, solution-focused mindset, and the comfort of training at home made all the difference."</p>
-                        <p class="font-semibold text-white"> Eda & Jako</p>
-                    </div>
-                    <div class="card text-center">
-                        <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=R" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
-                        <p class="text-gray-300 italic mb-3">"The perfect workout to look forward to each week. I'm learning so many new skills and feel much stronger."</p>
-                        <p class="font-semibold text-white"> R</p>
-                    </div>
-                    <div class="card text-center md:col-span-2 lg:col-span-1">
-                         <img src="https://placehold.co/100x100/4A5568/FFFFFF?text=C" alt="[Klant foto]" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-gray-700">
-                        <p class="text-gray-300 italic mb-3">"Kubiletic helped me get active and actually enjoy it. The outdoor setting is a huge bonus and the group is amazing!"</p>
-                        <p class="font-semibold text-white"> C</p>
+                    <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800 text-center">
+                        <h3 class="text-2xl font-bold mb-2">Monthly Coaching</h3>
+                        <p class="text-gray-400 mb-6">Invest in your discipline</p>
+                        <div class="text-5xl font-bold mb-6">€<span class="text-6xl">XX</span><span class="text-xl text-gray-500 font-normal">/mo</span></div>
+                        <ul class="text-left space-y-3 mb-8 text-gray-300 text-sm mx-auto max-w-xs">
+                            <li class="flex gap-2"><i data-lucide="check" class="h-4 w-4"></i> Fully individualized plan</li>
+                            <li class="flex gap-2"><i data-lucide="check" class="h-4 w-4"></i> Weekly check-ins</li>
+                            <li class="flex gap-2"><i data-lucide="check" class="h-4 w-4"></i> Form analysis</li>
+                        </ul>
+                        <button onclick="document.getElementById('contact').scrollIntoView()" class="btn btn-outline w-full">Inquire Now</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="faq" class="section-padding bg-black">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 md:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Got Questions? I've Got Answers.</h2>
+        <!-- VIEW: ABOUT -->
+        <section id="view-about" class="page-section min-h-[calc(100vh-80px)]">
+             <div class="container mx-auto px-4 py-12 max-w-4xl">
+                <button onclick="router('home')" class="text-gray-500 hover:text-white mb-8 flex items-center gap-2 text-sm">
+                    <i data-lucide="arrow-left" class="h-4 w-4"></i> Back Home
+                </button>
+                
+                <h2 class="text-3xl font-bold mb-8 text-center">Meet Kubi</h2>
+                
+                <div class="bg-[#111] rounded-2xl overflow-hidden border border-gray-800">
+                    <div class="grid md:grid-cols-2">
+                        <div class="h-64 md:h-auto relative">
+                             <img src="images/DSC02458.JPG" onerror="this.src='https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=1587'" alt="Kubi" class="absolute inset-0 w-full h-full object-cover opacity-80">
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center">
+                            <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                                Self-taught athlete. Student at ALO. My background spans <span class="text-white font-semibold">Calisthenics, Pilates, Gymnastics, Breakdance, and Yoga.</span>
+                            </p>
+                            <p class="text-gray-400 text-sm mb-6">
+                                I believe in the transformative power of movement. It reshaped my body and my outlook on life. Now, my mission is to share that gift—helping you discover strength you didn't know you had.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-black/50 p-3 rounded-lg text-center">
+                                    <span class="block text-2xl font-bold text-white">ALO</span>
+                                    <span class="text-xs text-gray-500 uppercase">Student</span>
+                                </div>
+                                <div class="bg-black/50 p-3 rounded-lg text-center">
+                                    <span class="block text-2xl font-bold text-white">∞</span>
+                                    <span class="text-xs text-gray-500 uppercase">Disciplines</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="max-w-3xl mx-auto space-y-6">
-                    <details class="card p-0 overflow-hidden group">
-                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
-                            <h4 class="font-semibold text-lg text-white">What if it rains?</h4>
-                            <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="p-4 sm:p-6 border-t border-gray-700">
-                            <p class="text-gray-400 leading-relaxed">I'm always ready to train! I'll send a poll in our WhatsApp group. If 3 or more people are keen to train, the session is on. Otherwise, we'll cancel for that day.</p>
-                        </div>
-                    </details>
-                    <details class="card p-0 overflow-hidden group">
-                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
-                            <h4 class="font-semibold text-lg text-white">What should I bring to a group class?</h4>
-                             <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="p-4 sm:p-6 border-t border-gray-700">
-                            <p class="text-gray-400 leading-relaxed">A towel, comfortable clothing you can move freely in (suitable for lying on grass/artificial grass), and optionally, grip gloves if you find them helpful. Don't forget a water bottle!</p>
-                        </div>
-                    </details>
-                    <details class="card p-0 overflow-hidden group">
-                        <summary class="flex items-center justify-between p-4 sm:p-6 cursor-pointer hover:bg-gray-700/50 transition">
-                            <h4 class="font-semibold text-lg text-white">Is the training suitable for absolute beginners?</h4>
-                             <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="p-4 sm:p-6 border-t border-gray-700">
-                            <p class="text-gray-400 leading-relaxed">Absolutely! I always adapt the training when new members join, ensuring exercises are tailored to different levels. Everyone starts somewhere, and you'll be supported every step of the way.</p>
-                        </div>
-                    </details>
-                </div>
-            </div>
+             </div>
         </section>
 
-        <section id="contact" class="section-padding bg-gray-900">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 md:mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Move? Let's Connect!</h2>
-                    <p class="text-gray-400 text-lg max-w-xl mx-auto">Have questions, want to book your first group class, or interested in a free personal training intake? Reach out – I'd love to hear from you.</p>
-                </div>
-                <div class="max-w-lg mx-auto text-center space-y-6">
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2 text-white">Send me a WhatsApp</h4>
-                        <a href="tel:+310642806854" class="text-gray-300 hover:text-white text-lg transition duration-300">+31 6 42806854</a>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2 text-white">Follow on Instagram</h4>
-                        <a href="https://www.instagram.com/kubiletic" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white text-lg transition duration-300">@kubiletic</a>
-                    </div>
-                    <!-- 
-                    <form action="#" method="POST" class="space-y-4">
-                        <div>
-                            <label for="name" class="sr-only">Name</label>
-                            <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white">
-                        </div>
-                        <div>
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white">
-                        </div>
-                        <div>
-                            <label for="message" class="sr-only">Message</label>
-                            <textarea name="message" id="message" rows="4" placeholder="Your Message" class="w-full p-3 rounded-md bg-gray-800 border border-gray-700 focus:border-gray-500 focus:ring-gray-500 text-white"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
-                    </form>
-                    -->
+        <!-- SHARED CONTACT SECTION -->
+        <section id="contact" class="py-20 bg-[#080808] border-t border-gray-900">
+            <div class="container mx-auto px-4 max-w-2xl text-center">
+                <h2 class="text-3xl font-bold mb-6">Ready to Move?</h2>
+                <p class="text-gray-400 mb-10">Send a message for personal training intake, online coaching queries, or just to say hi.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="https://wa.me/31642806854" class="flex items-center gap-3 text-lg hover:text-green-400 transition bg-white/5 px-6 py-4 rounded-xl w-full sm:w-auto justify-center">
+                        <i data-lucide="phone" class="h-5 w-5"></i>
+                        +31 6 4280 6854
+                    </a>
+                    <a href="https://www.instagram.com/kubiletic" target="_blank" class="flex items-center gap-3 text-lg hover:text-pink-400 transition bg-white/5 px-6 py-4 rounded-xl w-full sm:w-auto justify-center">
+                        <i data-lucide="instagram" class="h-5 w-5"></i>
+                        @kubiletic
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-black border-t border-gray-800 py-8 text-center">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-gray-500 mb-2">&copy; <span id="currentYear"></span> Kubiletic. All Rights Reserved.</p>
-            <p class="text-gray-600 text-sm">
-                <a href="#terms" id="terms-link" class="hover:text-gray-400 underline">Terms of Service & Disclaimer</a>
-            </p>
-            <div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[100] hidden">
-                <div class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-white">Terms of Service & Disclaimer</h3>
-                        <button id="close-terms-modal" class="text-gray-400 hover:text-white">&times;</button>
-                    </div>
-                    <div class="text-sm text-gray-300 space-y-3">
-                        <p>All training sessions and advice provided by Kubiletic are for recreational and general fitness purposes only.</p>
-                        <p>The information and training provided are not intended as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have learned or experienced through Kubiletic.</p>
-                        <p>Participation in any fitness program involves a risk of injury. By participating in Kubiletic training sessions, you acknowledge and accept these risks and agree to waive any claim against Kubiletic or its trainers for any injuries or damages sustained.</p>
-                        <p>Please inform your trainer of any pre-existing medical conditions, injuries, or physical limitations before starting any exercise program.</p>
-                        <p>Results from training programs may vary and are not guaranteed.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer class="py-8 text-center text-gray-600 text-sm border-t border-gray-900 bg-black">
+        <p>&copy; <span id="year"></span> Kubiletic.</p>
+        <button onclick="document.getElementById('terms-modal').classList.remove('hidden')" class="underline hover:text-gray-400 mt-2">Disclaimer & Terms</button>
     </footer>
 
+    <!-- Terms Modal -->
+    <div id="terms-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-gray-900 p-8 rounded-xl max-w-lg w-full border border-gray-800 shadow-2xl">
+            <h3 class="text-xl font-bold text-white mb-4">Terms & Disclaimer</h3>
+            <div class="text-gray-400 text-sm space-y-4 max-h-[60vh] overflow-y-auto mb-6">
+                <p>Training sessions are for recreational and fitness purposes. Not medical advice.</p>
+                <p>Participation involves risk of injury. You agree to waive claims against Kubiletic for injuries sustained.</p>
+                <p>Please inform your trainer of any pre-existing medical conditions.</p>
+            </div>
+            <button onclick="document.getElementById('terms-modal').classList.add('hidden')" class="btn btn-outline w-full text-sm">Close</button>
+        </div>
+    </div>
+
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            // Close mobile menu when a link is clicked
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
+        // Init Icons
+        lucide.createIcons();
 
-        // Smooth scroll for all anchor links (redundant if html.scroll-smooth is fully supported)
-        // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        //     anchor.addEventListener('click', function (e) {
-        //         const href = this.getAttribute('href');
-        //         // Ensure it's an internal link and not just "#"
-        //         if (href.length > 1 && document.querySelector(href)) {
-        //             e.preventDefault();
-        //             document.querySelector(href).scrollIntoView({
-        //                 behavior: 'smooth'
-        //             });
-        //         }
-        //     });
-        // });
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Section visibility on scroll (simple version)
-        const sections = document.querySelectorAll('section');
-        const observerOptions = {
-            root: null, // relative to document viewport
-            rootMargin: '0px',
-            threshold: 0.1 // 10% of section visible
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Optional: stop observing once visible to save resources
-                    // observer.unobserve(entry.target); 
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Animation classes for hero section (Tailwind doesn't have these by default)
-        // You might need to define these or use a library if you want complex animations
-        // For simplicity, I'll add basic fade-in/up with CSS custom properties if needed
-        // Or, use Tailwind's animation utilities if available/configured
-        const heroElements = document.querySelectorAll('#hero .animate-fade-in-down, #hero .animate-fade-in-up');
-        heroElements.forEach((el, index) => {
-            el.style.animationDelay = `${index * 0.2}s`; // Stagger animation
-            el.style.animationFillMode = 'backwards'; // Start hidden
-        });
+        // Simple Router
+        const views = ['home', 'group', 'personal', 'online', 'about'];
         
-        // Add some keyframes for the hero animations if not using a library
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `
-            @keyframes fadeInDown {
-                from { opacity: 0; transform: translateY(-20px); }
-                to { opacity: 1; transform: translateY(0); }
+        function router(viewId) {
+            // Hide all views
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if(el) el.classList.remove('active');
+            });
+
+            // Show target view
+            const target = document.getElementById(`view-${viewId}`);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo(0,0);
             }
-            .animate-fade-in-down { animation: fadeInDown 0.8s ease-out; }
 
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
-            .animation-delay-300 { animation-delay: 0.3s; }
-        `;
-        document.head.appendChild(styleSheet);
-
-        // Terms Modal Logic
-        const termsLink = document.getElementById('terms-link');
-        const termsModal = document.getElementById('terms-modal');
-        const closeTermsModalButton = document.getElementById('close-terms-modal');
-
-        if (termsLink && termsModal && closeTermsModalButton) {
-            termsLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                termsModal.classList.remove('hidden');
-            });
-            closeTermsModalButton.addEventListener('click', () => {
-                termsModal.classList.add('hidden');
-            });
-            // Close modal if clicked outside of the content
-            termsModal.addEventListener('click', (e) => {
-                if (e.target === termsModal) {
-                    termsModal.classList.add('hidden');
-                }
-            });
+            // Close mobile menu if open
+            closeMobileMenu();
         }
+
+        // Mobile Menu Logic
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Handle initial hash routing (optional)
+        // window.addEventListener('load', () => {
+        //     const hash = window.location.hash.replace('#', '');
+        //     if(views.includes(hash)) router(hash);
+        // });
 
     </script>
 </body>
 </html>
+
